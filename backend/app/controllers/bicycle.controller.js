@@ -26,14 +26,13 @@ exports.create = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Tutorial."
+          err.message || "Some error occurred while creating the Bicycle."
       });
     });
 };
 
 // Retrieve all Bicycles from the database.
 exports.findAll = (req, res) => {
-    
     Bicycle.findAll()
       .then(data => {
         res.send(data);
@@ -41,14 +40,34 @@ exports.findAll = (req, res) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tutorials."
+            err.message || "Some error occurred while retrieving bicycles."
         });
       });
 };
 
 // Find a single Bicycle with an id
 exports.findOne = (req, res) => {
-  
+  let id = req.params.id;
+  Bicycle.findByPk(id)
+    .then(data => {
+      console.log("estos son los datos")
+      console.log(data);
+      if (!data) {
+        res.status(404).send({
+          message: "No se ha encontrado ninguna bicicleta con esa id"
+        });
+      }
+      res.send(data);
+      return;
+    })
+    .catch(err => {
+      console.log(err.message)
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving a bicycle."
+      });
+      return;
+    })
 };
 
 // Update a Bicycle by the id in the request
