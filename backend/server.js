@@ -16,6 +16,8 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(express.static('public'));
+
 const db = require("./app/models");
 
 // explotation time.
@@ -26,16 +28,12 @@ db.sequelize.sync();
     console.log("Drop and re-sync db.");
   });*/
 
-  require("./app/routes/bicycle.routes")(app);
+  require("./app/routes/task.routes")(app);
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
+  res.json({ message: "Welcome to tasks application." });
 });
-
-app.get("/asdf", (req, res) => {
-    res.json({ message: "Welcome to the fucking hell." });
-})
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
