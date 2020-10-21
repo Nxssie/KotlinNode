@@ -20,6 +20,15 @@ module.exports = app => {
   
     // Delete all tasks
     router.delete("/", tasks.deleteAll);
+
+    // Retrieve all undone tasks
+    router.get("/undone/all", tasks.findAllUndone);
+
+    // Retrieve all done tasks
+    router.get("/done/all", tasks.findAllDone);
+
+    // Duplicate an existing task
+    router.post("/:id", tasks.copyTask);
   
     app.use('/api/tasks', router);
   };

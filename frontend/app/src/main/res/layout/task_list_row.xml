@@ -5,14 +5,25 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textViewBrand"
+        android:id="@+id/textViewTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/textViewModel"
+        android:id="@+id/textViewDesc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView" />
+
+    <CheckBox
+        android:id="@+id/checkBoxDone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:clickable="false"
+        android:enabled="false"
+        android:text="Done" />
+
+
 </LinearLayout>

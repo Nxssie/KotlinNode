@@ -1,4 +1,4 @@
-package com.example.bicycles
+package com.example.tasks
 
 import org.junit.Test
 

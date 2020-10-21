@@ -18,12 +18,14 @@
 /frontend/log.txt
 /frontend/npm-debug.log*
 
+/frontend/.gradle
 /frontend/.idea
 /frontend/.ionic
 /frontend/.sass-cache
 /frontend/.sourcemaps
 /frontend/.versions
 /frontend/.vscode
+/frontend/build
 /frontend/coverage
 /frontend/dist
 /frontend/node_modules
