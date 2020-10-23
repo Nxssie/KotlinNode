@@ -165,43 +165,43 @@ exports.findAllDone = (req, res) => {
 };
 
 // Copy an existing task
-exports.copyTask = (req, res) => {
-  let id = req.params.id;
-  Task.findByPk(id)
-    .then(data => {
-      if (!data) {
-        res.status(404).send({
-          message: "There's no task with that id"
-        });
-      }
+// exports.copyTask = (req, res) => {
+//   let id = req.params.id;
+//   Task.findByPk(id)
+//     .then(data => {
+//       if (!data) {
+//         res.status(404).send({
+//           message: "There's no task with that id"
+//         });
+//       }
       
-      let currentTask = data;
+//       let currentTask = data;
 
-      const copiedTask = {
-        title: currentTask.title,
-        description: currentTask.description,
-        done: false
-      };
+//       const copiedTask = {
+//         title: currentTask.title,
+//         description: currentTask.description,
+//         done: false
+//       };
     
-      // Save Task in the database
-      Task.create(copiedTask)
-        .then(data => {
-          res.send(data);
-        })
-        .catch(err => {
-          res.status(500).send({
-            message:
-              err.message || "Some error occurred while creating the task."
-          });
-        });
-    })
-    .catch(err => {
-      console.log(err.message)
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving a task."
-      });
-    })
+//       // Save Task in the database
+//       Task.create(copiedTask)
+//         .then(data => {
+//           res.send(data);
+//         })
+//         .catch(err => {
+//           res.status(500).send({
+//             message:
+//               err.message || "Some error occurred while creating the task."
+//           });
+//         });
+//     })
+//     .catch(err => {
+//       console.log(err.message)
+//       res.status(500).send({
+//         message:
+//           err.message || "Some error occurred while retrieving a task."
+//       });
+//     })
   
   
-};
+// };

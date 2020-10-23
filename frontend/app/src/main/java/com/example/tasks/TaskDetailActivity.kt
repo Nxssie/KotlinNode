@@ -2,15 +2,16 @@ package com.example.tasks
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tasks.models.Task
 import com.example.tasks.service.TaskServiceImpl
 import com.google.android.material.textfield.TextInputEditText
+import org.json.JSONObject
 
 class TaskDetailActivity : AppCompatActivity(){
     private lateinit var state: String
@@ -29,6 +30,7 @@ class TaskDetailActivity : AppCompatActivity(){
         state = this.intent.getStringExtra("state").toString()
 
         val taskid = this.intent.getIntExtra("taskId", 1)
+        Log.v("Task ID:", taskid.toString())
 
         textInputEditTextTitle = findViewById(R.id.TextInputEditTextTitle)
         textInputEditTextDesc = findViewById(R.id.TextInputEditTextDesc)
@@ -38,6 +40,8 @@ class TaskDetailActivity : AppCompatActivity(){
         buttonDelete.setOnClickListener {
             deleteTask(taskid)
         }
+
+        textInputEditTextTitle.setText(title)
 
         if(state == "Showing") getTask(taskid)
 
@@ -86,6 +90,7 @@ class TaskDetailActivity : AppCompatActivity(){
     private fun changeButtonsToAdding() {
         buttonDelete.visibility = View.GONE
         buttonDelete.isEnabled = false
+        buttonEdit.isEnabled = true
         buttonEdit.setText("Add Task")
         textInputEditTextTitle.isEnabled = true
         textInputEditTextDesc.isEnabled = true
@@ -96,6 +101,7 @@ class TaskDetailActivity : AppCompatActivity(){
     private fun changeButtonsToShowing(taskId: Int){
         buttonDelete.visibility = View.VISIBLE
         buttonDelete.isEnabled = true
+        buttonEdit.isEnabled=true
         buttonEdit.setText("Edit Task")
         textInputEditTextTitle.isEnabled = false
         textInputEditTextDesc.isEnabled = false
@@ -105,7 +111,7 @@ class TaskDetailActivity : AppCompatActivity(){
 
     private fun changeButtonsToEditing() {
         buttonDelete.visibility = View.GONE
-        buttonDelete.isEnabled = false
+        buttonDelete.isEnabled = true
         buttonEdit.setText("Apply changes")
         textInputEditTextTitle.isEnabled = true
         textInputEditTextDesc.isEnabled = true
@@ -113,24 +119,24 @@ class TaskDetailActivity : AppCompatActivity(){
         state = "Editing"
     }
 
-    private fun getTask(taskId: Int) {
-        val bicycleServiceImpl = TaskServiceImpl()
-        bicycleServiceImpl.getById(this, taskId) { response ->
+    private fun getTask(taskid: Int) {
+        val taskServiceImpl = TaskServiceImpl()
+        taskServiceImpl.getById(this, taskid) { response ->
             run {
-
                 val txt_title: TextInputEditText = findViewById(R.id.TextInputEditTextTitle)
                 val txt_description: TextInputEditText = findViewById(R.id.TextInputEditTextDesc)
                 val checkbox_done: CheckBox = findViewById(R.id.checkBoxDone)
 
                 txt_title.setText(response?.title ?: "")
                 txt_description.setText(response?.description ?: "")
+                checkbox_done.isChecked = response?.done ?: false
             }
         }
     }
 
-    private fun deleteTask(taskId: Int) {
+    private fun deleteTask(taskid: Int) {
         val bicycleServiceImpl = TaskServiceImpl()
-        bicycleServiceImpl.deleteById(this, taskId) { ->
+        bicycleServiceImpl.deleteById(this, taskid) { ->
             run {
                 val intent = Intent(this, TaskListActivity::class.java)
                 startActivity(intent)

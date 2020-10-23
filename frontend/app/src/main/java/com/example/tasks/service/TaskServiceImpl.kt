@@ -129,7 +129,7 @@ class TaskServiceImpl : ITaskService {
 
     override fun createTask(context: Context, task: Task, completionHandler: () -> Unit) {
         val path = TaskSingleton.getInstance(context).baseUrl + "/api/tasks/" + task.id
-        val taskJson: JSONObject = JSONObject()
+        val taskJson = JSONObject()
         taskJson.put("id", task.id.toString())
         taskJson.put("title", task.title)
         taskJson.put("description", task.description)
