@@ -30,7 +30,7 @@ class TaskAdapter(var taskList: ArrayList<Task>, val context: Context) : Recycle
             val txt_desc: TextView = itemView.findViewById(R.id.textViewDesc)
             val box_done: CheckBox = itemView.findViewById(R.id.checkBoxDone)
             txt_title.text = t.title
-            txt_desc.text = t.desc
+            txt_desc.text = t.description
             box_done.isChecked = t.done
         }
     }

@@ -4,14 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TaskListActivity">
+    android:visibility="visible"
+    tools:actionBarNavMode="standard"
+    tools:context=".TaskListActivity"
+    tools:visibility="visible">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewBicycles"
+        android:id="@+id/recyclcerViewTasks"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton2"
+        style="@style/Widget.MaterialComponents.FloatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        app:borderWidth="0.5dp"
+        app:elevation="6dp"
+        app:fabSize="auto"
+        app:hideMotionSpec="@animator/mtrl_fab_hide_motion_spec"
+        app:hoveredFocusedTranslationZ="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="24dp"
+        app:pressedTranslationZ="6dp"
+        app:showMotionSpec="@animator/mtrl_fab_show_motion_spec"
+        app:srcCompat="@android:drawable/ic_input_add"
+        android:contentDescription="TODO"
+        android:focusable="true" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
