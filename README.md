@@ -9,6 +9,15 @@ To install this project you need:
 * A working Android environment.
 * A Mysql Server.
 
+You'll need to understand the HTTP METHODS:
+* [Postman Documentation](https://documenter.getpostman.com/view/13039694/TVYF8Jio)
+
+Each task needs:
+* ID (Auto-incremented in the database so you can keep empty)
+* Title (Varchar(30))
+* Description (Varchar(255))
+* Done (Boolean / Tinyint(1))
+
 ### Installing :gear:
 
 Open a command line console and clone this project.
@@ -33,7 +42,7 @@ Start the backend project
 node server.js
 ```
 
-And finally start the frontend Android App with Android Studio.
+And finally start the frontend Android App with Android Studio (ver. 4.1).
 
 ## Built With :wrench:
 
