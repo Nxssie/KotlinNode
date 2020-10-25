@@ -2,11 +2,14 @@ package com.example.tasks.service
 
 import android.content.Context
 import android.util.Log
+import android.widget.CheckBox
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
+import com.example.tasks.R
 import com.example.tasks.models.Task
+import com.google.android.material.textfield.TextInputEditText
 import org.json.JSONObject
 
 class TaskServiceImpl : ITaskService {
@@ -114,7 +117,7 @@ class TaskServiceImpl : ITaskService {
         val taskJson: JSONObject = JSONObject()
         taskJson.put("id", task.id.toString())
         taskJson.put("title", task.title)
-        taskJson.put("model", task.description)
+        taskJson.put("description", task.description)
         taskJson.put("done", task.done)
 
         val objectRequest = JsonObjectRequest(Request.Method.PUT, path, taskJson,
@@ -128,7 +131,7 @@ class TaskServiceImpl : ITaskService {
     }
 
     override fun createTask(context: Context, task: Task, completionHandler: () -> Unit) {
-        val path = TaskSingleton.getInstance(context).baseUrl + "/api/tasks/" + task.id
+        val path = TaskSingleton.getInstance(context).baseUrl + "/api/tasks/"
         val taskJson = JSONObject()
         taskJson.put("id", task.id.toString())
         taskJson.put("title", task.title)
@@ -142,6 +145,12 @@ class TaskServiceImpl : ITaskService {
     }
 
     override fun copyTask(context: Context, taskId: Int, completionHandler: () -> Unit) {
-        val path = TaskSingleton.getInstance(context).baseUrl + "/api/tasks/" + taskId
+        val path = TaskSingleton.getInstance(context).baseUrl + "/api/tasks/copy/" + taskId
+        val taskJson = JSONObject()
+
+        val objectRequest = JsonObjectRequest(Request.Method.POST, path, taskJson, {
+            response -> completionHandler() },
+            {error -> completionHandler() })
+        TaskSingleton.getInstance(context).addToRequestQueue(objectRequest)
     }
 }

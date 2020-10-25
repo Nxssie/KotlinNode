@@ -5,11 +5,14 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tasks.models.Task
+import com.example.tasks.service.TaskServiceImpl
 
 class TaskAdapter(var taskList: ArrayList<Task>, val context: Context) : RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
 
@@ -32,10 +35,12 @@ class TaskAdapter(var taskList: ArrayList<Task>, val context: Context) : Recycle
             val txt_title: TextView = itemView.findViewById(R.id.textViewTitle)
             val txt_desc: TextView = itemView.findViewById(R.id.textViewDesc)
             val box_done: CheckBox = itemView.findViewById(R.id.checkBoxDone)
+            val taskId: Int = t.id
 
             rowLayout.setOnClickListener{
                 val intent: Intent = Intent(context, TaskDetailActivity::class.java)
                 intent.putExtra("taskId", t.id)
+                intent.putExtra("state", "Showing")
                 context.startActivity(intent)
             }
 

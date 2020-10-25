@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.tasks.models.Task
 import com.example.tasks.service.TaskServiceImpl
 import com.google.android.material.textfield.TextInputEditText
-import org.json.JSONObject
 
 class TaskDetailActivity : AppCompatActivity(){
     private lateinit var state: String
@@ -20,6 +19,7 @@ class TaskDetailActivity : AppCompatActivity(){
     private lateinit var checkBoxDone: CheckBox
     private lateinit var buttonEdit: Button
     private lateinit var buttonDelete: Button
+    private lateinit var buttonDuplicate: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +28,7 @@ class TaskDetailActivity : AppCompatActivity(){
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         state = this.intent.getStringExtra("state").toString()
+        Log.v("Current state:", state)
 
         val taskid = this.intent.getIntExtra("taskId", 1)
         Log.v("Task ID:", taskid.toString())
@@ -36,12 +37,19 @@ class TaskDetailActivity : AppCompatActivity(){
         textInputEditTextDesc = findViewById(R.id.TextInputEditTextDesc)
         checkBoxDone = findViewById(R.id.checkBoxDone)
 
+        textInputEditTextTitle.isEnabled = false
+        textInputEditTextDesc.isEnabled = false
+        checkBoxDone.isEnabled = false
+
         buttonDelete = findViewById(R.id.buttonDelete)
         buttonDelete.setOnClickListener {
             deleteTask(taskid)
         }
 
-        textInputEditTextTitle.setText(title)
+        buttonDuplicate = findViewById(R.id.buttonDuplicate)
+        buttonDuplicate.setOnClickListener{
+            copyTask(taskid)
+        }
 
         if(state == "Showing") getTask(taskid)
 
@@ -49,15 +57,22 @@ class TaskDetailActivity : AppCompatActivity(){
         buttonEdit.setOnClickListener {
             when(state){
                 "Showing" -> {
+                    Log.v("Showing:", state)
                     changeButtonsToEditing()
                 }
                 "Editing" -> {
-                    val task = Task(taskId, textInputEditTextTitle.text.toString(), textInputEditTextDesc.text.toString(), checkBoxDone.isChecked)
-                    updateBicycle(task)
+                    Log.v("Editing:", state)
+                    val task = Task(taskid, textInputEditTextTitle.text.toString(), textInputEditTextDesc.text.toString(), checkBoxDone.isChecked)
+                    Log.v("Task ID:", task.id.toString())
+                    Log.v("Task title:", task.title)
+                    Log.v("Task description:", task.description)
+                    Log.v("Task done:", task.done.toString())
+                    updateTask(task)
                 }
                 "Adding" -> {
-                    val task = Task(taskId, textInputEditTextTitle.text.toString(), textInputEditTextDesc.text.toString(), checkBoxDone.isChecked)
-                    createBicycle(task)
+                    Log.v("Adding:", state)
+                    val task = Task(taskid, textInputEditTextTitle.text.toString(), textInputEditTextDesc.text.toString(), checkBoxDone.isChecked)
+                    createTask(task)
                 }
             }
         }
@@ -65,9 +80,21 @@ class TaskDetailActivity : AppCompatActivity(){
         if(state == "Adding") changeButtonsToAdding()
     }
 
-    private fun updateBicycle(task: Task) {
-        val bicycleServiceImpl = TaskServiceImpl()
-        bicycleServiceImpl.updateTask(this, task) { ->
+    private fun updateTask(task: Task) {
+        val taskServiceImpl = TaskServiceImpl()
+        taskServiceImpl.updateTask(this, task) { ->
+            run {
+                Log.v("Updating:", task.title)
+                changeButtonsToShowing(task.id)
+                val intent = Intent(this, TaskListActivity::class.java)
+                startActivity(intent)
+            }
+        }
+    }
+
+    private fun createTask(task: Task) {
+        val taskServiceImpl = TaskServiceImpl()
+        taskServiceImpl.createTask(this, task) { ->
             run {
                 changeButtonsToShowing(task.id)
                 val intent = Intent(this, TaskListActivity::class.java)
@@ -76,11 +103,11 @@ class TaskDetailActivity : AppCompatActivity(){
         }
     }
 
-    private fun createBicycle(task: Task) {
-        val bicycleServiceImpl = TaskServiceImpl()
-        bicycleServiceImpl.createTask(this, task) { ->
+    private fun copyTask(taskid: Int) {
+        val taskServiceImpl = TaskServiceImpl()
+        taskServiceImpl.copyTask(this, taskid) { ->
             run {
-                changeButtonsToShowing(task.id)
+                changeButtonsToShowing(taskid)
                 val intent = Intent(this, TaskListActivity::class.java)
                 startActivity(intent)
             }
@@ -89,6 +116,7 @@ class TaskDetailActivity : AppCompatActivity(){
 
     private fun changeButtonsToAdding() {
         buttonDelete.visibility = View.GONE
+        buttonDuplicate.visibility = View.GONE
         buttonDelete.isEnabled = false
         buttonEdit.isEnabled = true
         buttonEdit.setText("Add Task")
@@ -112,6 +140,7 @@ class TaskDetailActivity : AppCompatActivity(){
     private fun changeButtonsToEditing() {
         buttonDelete.visibility = View.GONE
         buttonDelete.isEnabled = true
+        buttonDuplicate.visibility = View.GONE
         buttonEdit.setText("Apply changes")
         textInputEditTextTitle.isEnabled = true
         textInputEditTextDesc.isEnabled = true
@@ -123,6 +152,7 @@ class TaskDetailActivity : AppCompatActivity(){
         val taskServiceImpl = TaskServiceImpl()
         taskServiceImpl.getById(this, taskid) { response ->
             run {
+                Log.v("Task ID:", taskid.toString())
                 val txt_title: TextInputEditText = findViewById(R.id.TextInputEditTextTitle)
                 val txt_description: TextInputEditText = findViewById(R.id.TextInputEditTextDesc)
                 val checkbox_done: CheckBox = findViewById(R.id.checkBoxDone)
@@ -135,8 +165,8 @@ class TaskDetailActivity : AppCompatActivity(){
     }
 
     private fun deleteTask(taskid: Int) {
-        val bicycleServiceImpl = TaskServiceImpl()
-        bicycleServiceImpl.deleteById(this, taskid) { ->
+        val taskServiceImpl = TaskServiceImpl()
+        taskServiceImpl.deleteById(this, taskid) { ->
             run {
                 val intent = Intent(this, TaskListActivity::class.java)
                 startActivity(intent)

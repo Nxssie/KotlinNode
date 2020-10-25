@@ -42,7 +42,6 @@ class TaskListActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
     }
 
     private fun getAllTasksLocally() {
@@ -53,8 +52,8 @@ class TaskListActivity : AppCompatActivity() {
     }
 
     private fun getAllTasks() {
-        val bicycleServiceImpl = TaskServiceImpl()
-        bicycleServiceImpl.getAll(this) { response ->
+        val taskServiceImpl = TaskServiceImpl()
+        taskServiceImpl.getAll(this) { response ->
             run {
                 if (response != null) {
                     viewAdapter.taskList = response
@@ -63,6 +62,15 @@ class TaskListActivity : AppCompatActivity() {
             }
         }
     }
-    
+
+    private fun copyTask(taskId: Int) {
+        val taskServiceImpl = TaskServiceImpl()
+        taskServiceImpl.copyTask(this, taskId) { ->
+            run {
+                val intent = Intent(this, this::class.java)
+                startActivity(intent)
+            }
+        }
+    }
 
 }

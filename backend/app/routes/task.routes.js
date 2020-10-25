@@ -28,7 +28,7 @@ module.exports = app => {
     router.get("/done/all", tasks.findAllDone);
 
     // Duplicate an existing task
-    //router.post("/copy/:id", tasks.copyTask);
+    router.post("/copy/:id", tasks.copyTask);
   
     app.use('/api/tasks', router);
   };

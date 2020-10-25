@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Bicycles" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.Tasks" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -14,12 +14,12 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.Bicycles.NoActionBar">
+    <!--<style name="Theme.Tasks.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-    </style>
+    </style>-->
 
-    <style name="Theme.Bicycles.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.Tasks.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Theme.Bicycles.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.Tasks.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
