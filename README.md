@@ -25,7 +25,7 @@ cd backend
 npm install
 ```
 
-After that start your MySQL Server and import the database db_tasks.sql included in the /backend directory of this project.
+After that start your MySQL Server and import the database [db_tasks.sql](https://github.com/Nxssie/KotlinNode/blob/master/backend/db_tasks.sql) included in the /backend directory of this project.
 
 Start the backend project
 
