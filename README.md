@@ -56,3 +56,7 @@ And finally start the frontend Android App with Android Studio (ver. 4.1).
 * https://developer.android.com/training/volley/requestqueue?hl=es - How to configure a Singleton.
 * https://developer.android.com/training/volley?hl=es - How to send data with Volley from Kotlin App.
 * https://www.varvet.com/blog/kotlin-with-volley/ - Kotlin with Volley
+
+## DevNotes :memo:
+
+There are some methods in the backend as findAllUndone, findAllDone or deleteAll that are not implemented in the frontend. My main idea was implementing them but didn't found a way to do it so, if you wanna help you could do a pull request with some code and if it works adapting this functions to the frontend UI correctly I will approve it. Thanks for all one more time :heart:
